@@ -3,9 +3,6 @@ using Business.Abstract;
 using Business.Concrete;
 using DataAccessLayer.Abstract;
 using DataAccessLayer.Concrete.EntityFramework;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using Core.Utilities.Security.jwt;
 
 namespace Business.DependencyResolves.Autofac
