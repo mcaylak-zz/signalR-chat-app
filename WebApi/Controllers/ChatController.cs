@@ -38,7 +38,17 @@ namespace WebApi.Controllers
         public IActionResult SaveUser(string userName)
         {
             _userService.SaveUser(userName);
-            return Ok(userName + " save in database");
+            return Ok(new ResponseModel
+            {
+                State = true,
+                Value = userName
+            });
+        }
+
+        public class ResponseModel
+        {
+            public string Value { get; set; }
+            public bool State  { get; set; }
         }
     }
 }
