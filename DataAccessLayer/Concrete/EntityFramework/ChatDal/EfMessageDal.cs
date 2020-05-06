@@ -17,7 +17,7 @@ namespace DataAccessLayer.Concrete.EntityFramework.ChatDal
             {
                 return context.Message
                     .Where(x => x.ToName == toUser && x.FromName == fromUser)
-                        .OrderBy(x => x.Date).ToList();
+                    ?.OrderBy(x => x.Date).ToList();
             }
         }
     }

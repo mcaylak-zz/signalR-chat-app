@@ -21,16 +21,25 @@ namespace WebApi.Controllers
             _userService = userService;
         }
 
+
+        [HttpGet("GetUserMessages")]
         public IActionResult GetMessagesWithUsers(string toUser,string fromUser)
         {
             var data = _chatService.GetMessagesWithUsers(toUser, fromUser);
             return Ok(data);
         }
 
-
+        [HttpGet("GetGroupMessages")]
         public IActionResult GetGroupMessages(string groupName)
         {
-            var data = _chatService.GetGroupsMessage(groupName);
+            var data = _chatService.GetGroupMessages(groupName);
+            return Ok(data);
+        }
+
+        [HttpGet("GetAllUsers")]
+        public IActionResult GetAllUsers()
+            {
+            var data = _chatService.GetAllUsers();
             return Ok(data);
         }
 
@@ -38,11 +47,13 @@ namespace WebApi.Controllers
         public IActionResult SaveUser(string userName)
         {
             _userService.SaveUser(userName);
-            return Ok(new ResponseModel
+            var data = new ResponseModel
             {
                 State = true,
                 Value = userName
-            });
+            };
+
+            return Ok(data);
         }
 
         public class ResponseModel

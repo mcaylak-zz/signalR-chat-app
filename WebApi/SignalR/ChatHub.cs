@@ -34,7 +34,7 @@ namespace WebApi.SignalR
 
         public void ChatBroadCast(string message)
         {
-            Clients.All.SendAsync("chatBroadCast", message);
+            Clients.All.SendAsync("receiveBroadCast", message);
         }
 
         public void PrivateChat(string toUser,string fromUser,string message)
@@ -43,7 +43,7 @@ namespace WebApi.SignalR
             _connectedUsers.ForEach(val =>
             {
                 if(val.Username == toUser)
-                    Clients.User(val.ConnId).SendAsync("receiveMessage", message);
+                    Clients.User(val.ConnId).SendAsync("receiveMessage", message,fromUser);
             });
         }
 
@@ -63,8 +63,13 @@ namespace WebApi.SignalR
 
         public void SendMessageToRoom(string fromName,string roomName,string message)
         {
-            _chatService.saveGroupMessage(roomName,fromName,message); //saving database 
+            /*Save group message*/
             Clients.Group(roomName).SendAsync("ReceiveGroupMessage", message); // send group clients
+        }
+
+        public List<ConnectedUser> GetAllActiveConnections()
+        {
+            return _connectedUsers;
         }
     }
 

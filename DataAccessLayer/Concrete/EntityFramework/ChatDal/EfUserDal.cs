@@ -18,10 +18,6 @@ namespace DataAccessLayer.Concrete.EntityFramework.ChatDal
         {
             using (var context = new ChatContext())
             {
-                var data = context.Group
-                    .Include(x => x.GroupMessages)
-                    .Include(x => x.UserGroups).ToList();
-
                 return context.User.ToList();
             }
         }

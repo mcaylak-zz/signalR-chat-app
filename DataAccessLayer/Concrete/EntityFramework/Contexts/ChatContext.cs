@@ -14,10 +14,7 @@ namespace DataAccessLayer.Concrete.EntityFramework.Contexts
         {
             optionsBuilder.UseSqlServer(@"Server=(localdb)\mssqllocaldb;Database=ChatDb;Trusted_Connection=true");
         }
-
-        public DbSet<Group> Group { get; set; }
         public DbSet<User> User { get; set; }
         public DbSet<Message> Message { get; set; }
-        public DbSet<GroupMessage> GroupMessage { get; set; }
     }
 }
