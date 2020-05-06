@@ -12,16 +12,9 @@ namespace Business.DependencyResolves.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<ProductManager>().As<IProductService>();
-            builder.RegisterType<EfProductDal>().As<IProductDal>();
+            builder.RegisterType<Concrete.Chat.UserManager>().As<Abstract.Chat.IUserService>();
+            builder.RegisterType<DataAccessLayer.Concrete.EntityFramework.ChatDal.EfUserDal>().As<DataAccessLayer.Abstract.ChatDal.IUserDal>();
 
-            builder.RegisterType<CategoryManager>().As<ICategoryService>();
-            builder.RegisterType<EfCategoryDal>().As<ICategoryDal>();
-
-            builder.RegisterType<UserManager>().As<IUserService>();
-            builder.RegisterType<EfUserDal>().As<IUserDal>();
-
-            builder.RegisterType<AuthManager>().As<IAuthService>();
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
         }
     }
