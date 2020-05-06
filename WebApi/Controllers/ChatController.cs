@@ -25,7 +25,7 @@ namespace WebApi.Controllers
         [HttpGet("GetUserMessages")]
         public IActionResult GetMessagesWithUsers(string toUser,string fromUser)
         {
-            var data = _chatService.GetMessagesWithUsers(toUser, fromUser);
+            var data = _chatService.GetPrivateChatMessages(toUser, fromUser);
             return Ok(data);
         }
 

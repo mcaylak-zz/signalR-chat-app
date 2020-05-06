@@ -19,11 +19,6 @@ namespace Business.Concrete.Chat
             _userService = userService;
         }
 
-        public List<Message> GetMessagesWithUsers(string toUser, string fromUser)
-        {
-            return _messageDal.GetMessagesWithUsers(toUser, fromUser);
-        }
-
 
         public void saveMessage(string toUser, string fromUser,string description)
         {
@@ -55,7 +50,7 @@ namespace Business.Concrete.Chat
 
         public List<Message> GetPrivateChatMessages(string toUser, string fromUser)
         {
-            return _messageDal.GetList(x => x.ToName == toUser && x.FromName == fromUser)
+            return _messageDal.GetList(x => x.ToName == toUser && x.FromName == fromUser && x.GroupName == null)
                     .OrderBy(x => x.Date).ToList();
         }
 
