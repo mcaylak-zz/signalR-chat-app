@@ -1,9 +1,9 @@
 ﻿using Autofac;
-using Business.Abstract;
-using Business.Concrete;
-using DataAccessLayer.Abstract;
-using DataAccessLayer.Concrete.EntityFramework;
+using Business.Abstract.Chat;
+using Business.Concrete.Chat;
 using Core.Utilities.Security.jwt;
+using DataAccessLayer.Abstract.ChatDal;
+using DataAccessLayer.Concrete.EntityFramework.ChatDal;
 
 namespace Business.DependencyResolves.Autofac
 {
@@ -12,8 +12,12 @@ namespace Business.DependencyResolves.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<Concrete.Chat.UserManager>().As<Abstract.Chat.IUserService>();
-            builder.RegisterType<DataAccessLayer.Concrete.EntityFramework.ChatDal.EfUserDal>().As<DataAccessLayer.Abstract.ChatDal.IUserDal>();
+            builder.RegisterType<UserManager>().As<IUserService>();
+            builder.RegisterType<EfUserDal>().As<IUserDal>();
+
+            builder.RegisterType<ChatManager>().As<IChatService>();
+            builder.RegisterType<EfGroupDal>().As<IGroupDal>();
+            builder.RegisterType<EfMessageDal>().As<IMessageDal>();
 
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
         }

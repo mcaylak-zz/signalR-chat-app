@@ -27,13 +27,14 @@ namespace WebApi.Controllers
             return Ok(data);
         }
 
+
         public IActionResult GetGroupMessages(string groupName)
         {
             var data = _chatService.GetGroupsMessage(groupName);
             return Ok(data);
         }
 
-        [HttpPost("saveUser")]
+        [HttpGet("saveUser")]
         public IActionResult SaveUser(string userName)
         {
             _userService.SaveUser(userName);

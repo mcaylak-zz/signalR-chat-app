@@ -8,7 +8,8 @@ namespace Core.Entities.Entity
     {
         public int UserId { get; set; }
         public string Username { get; set; }
-        public int GroupId { get; set; }
+        public List<UserGroup> UserGroups { get; set; }
         public List<Message> Messages { get; set; }
     }
+
 }
