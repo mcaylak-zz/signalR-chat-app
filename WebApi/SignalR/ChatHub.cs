@@ -10,24 +10,29 @@ namespace WebApi.SignalR
 {
     public class ChatHub : Hub
     { 
-        private List<ConnectedUser> _connectedUsers;
+        private static List<ConnectedUser> _connectedUsers = new List<ConnectedUser>();
         private IChatService _chatService;
 
         public ChatHub(IChatService chatService)
         {
             _chatService = chatService;
-            _connectedUsers = new List<ConnectedUser>();
         }
 
         public override Task OnConnectedAsync()
         {
             var username = Context.GetHttpContext().Request.Query["username"];
 
-            _connectedUsers.Add(new ConnectedUser
+            var status = _connectedUsers.FirstOrDefault(x => x.Username == username);
+
+            if (status == null)
             {
-                ConnId = Context.ConnectionId,
-                Username = username
-            });
+                _connectedUsers.Add(new ConnectedUser
+                {
+                    ConnId = Context.ConnectionId,
+                    Username = username
+                });
+
+            }
 
             return base.OnConnectedAsync();
         }
@@ -44,6 +49,8 @@ namespace WebApi.SignalR
             {
                 if(val.Username == toUser)
                     Clients.User(val.ConnId).SendAsync("receiveMessage", message,fromUser);
+                if (val.Username == toUser)
+                    Clients.AllExcept(val.ConnId).SendAsync("receiveMessage", message, fromUser);
             });
         }
 

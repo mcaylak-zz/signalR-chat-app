@@ -50,7 +50,9 @@ namespace Business.Concrete.Chat
 
         public List<Message> GetPrivateChatMessages(string toUser, string fromUser)
         {
-            return _messageDal.GetList(x => x.ToName == toUser && x.FromName == fromUser && x.GroupName == null)
+            return _messageDal.GetList(x =>
+                    ((x.ToName == toUser && x.FromName == fromUser) || (x.ToName == fromUser && x.FromName == toUser)) 
+                        && x.GroupName == null)
                     .OrderBy(x => x.Date).ToList();
         }
 
