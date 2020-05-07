@@ -24,6 +24,8 @@ namespace WebApi.SignalR
 
             var status = _connectedUsers.FirstOrDefault(x => x.Username == username);
 
+            var data = Context.UserIdentifier;
+
             if (status == null)
             {
                 _connectedUsers.Add(new ConnectedUser
@@ -47,10 +49,9 @@ namespace WebApi.SignalR
             _chatService.saveMessage(toUser,fromUser,message);
             _connectedUsers.ForEach(val =>
             {
-                if(val.Username == toUser)
-                    Clients.User(val.ConnId).SendAsync("receiveMessage", message,fromUser);
-                if (val.Username == toUser)
-                    Clients.AllExcept(val.ConnId).SendAsync("receiveMessage", message, fromUser);
+                if (val.Username == fromUser)
+                    Clients.Clients(val.ConnId).SendAsync("receiveMessage", message, fromUser);
+
             });
         }
 
