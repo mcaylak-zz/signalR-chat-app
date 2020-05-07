@@ -21,12 +21,19 @@ namespace Business.Concrete.Chat
             return _userDal.FetchUsers();
         }
 
-        public void SaveUser(string userName)
+        public User SaveUser(string userName)
         {
-             _userDal.Add(new User
+            _userDal.Add(new User
             {
                 Username = userName
             });
+
+            return _userDal.Get(x => x.Username == userName);
+        }
+
+        public User findUser(string userName)
+        {
+            return _userDal.Get(x => x.Username == userName);
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Business.Abstract.Chat;
 using Microsoft.AspNetCore.Http;
@@ -22,8 +23,7 @@ namespace WebApi.Controllers
         [HttpGet("test")]
         public IActionResult Test()
         {
-            var data = _userService.GetUsers();
-            return Ok();
+            return Ok("Bismillahirrahmanirrahim");
         }
     }
 }

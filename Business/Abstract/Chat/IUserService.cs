@@ -8,6 +8,7 @@ namespace Business.Abstract.Chat
     public interface IUserService
     {
         List<User> GetUsers();
-        void SaveUser(string userName);
+        User SaveUser(string userName);
+        User findUser(string userName);
     }
 }

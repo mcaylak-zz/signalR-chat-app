@@ -21,6 +21,23 @@ namespace WebApi.Controllers
             _userService = userService;
         }
 
+        [HttpGet("GetAllUsers")]
+        public IActionResult GetAllUsers()
+        {
+            var data = _userService.GetUsers();
+
+            data.ForEach(x =>
+            {
+                x.Groups.ForEach(y =>
+                {
+                    y.User = null;
+                    y.Group.Users = null;
+                });
+            });
+
+            return Ok(data);
+        }
+
 
         [HttpGet("GetUserMessages")]
         public IActionResult GetMessagesWithUsers(string toUser,string fromUser)
@@ -36,24 +53,18 @@ namespace WebApi.Controllers
             return Ok(data);
         }
 
-        [HttpGet("GetAllUsers")]
-        public IActionResult GetAllUsers()
-            {
-            var data = _chatService.GetAllUsers();
-            return Ok(data);
-        }
-
         [HttpGet("saveUser")]
         public IActionResult SaveUser(string userName)
         {
-            _userService.SaveUser(userName);
-            var data = new ResponseModel
-            {
-                State = true,
-                Value = userName
-            };
+            var user = _userService.findUser(userName) ?? _userService.SaveUser(userName);
 
-            return Ok(data);
+            user.Groups?.ForEach(x =>
+            {
+                x.User = null;
+                x.Group.Users = null;
+            });
+
+            return Ok(user);
         }
 
         public class ResponseModel
