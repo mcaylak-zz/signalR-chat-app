@@ -39,9 +39,10 @@ namespace WebApi.SignalR
             return base.OnConnectedAsync();
         }
 
-        public void ChatBroadCast(string message)
+        public void ChatBroadCast(string message,string fromName)
         {
-            Clients.All.SendAsync("receiveBroadCast", message);
+            _chatService.saveGroupMessage("AllChat",fromName,message);
+            Clients.All.SendAsync("receiveBroadCast", message,fromName);
         }
 
         public void PrivateChat(string toUser, string fromUser, string message)
@@ -51,7 +52,6 @@ namespace WebApi.SignalR
             {
                 if (val.Username == fromUser)
                     Clients.Clients(val.ConnId).SendAsync("receiveMessage", message, fromUser);
-
             });
         }
 
