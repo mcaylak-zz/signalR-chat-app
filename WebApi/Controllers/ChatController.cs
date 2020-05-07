@@ -40,7 +40,7 @@ namespace WebApi.Controllers
 
 
         [HttpGet("GetUserMessages")]
-        public IActionResult GetMessagesWithUsers(string toUser,string fromUser)
+        public IActionResult GetMessagesWithUsers(string toUser, string fromUser)
         {
             var data = _chatService.GetPrivateChatMessages(toUser, fromUser);
             return Ok(data);
@@ -50,6 +50,13 @@ namespace WebApi.Controllers
         public IActionResult GetGroupMessages(string groupName)
         {
             var data = _chatService.GetGroupMessages(groupName);
+            return Ok(data);
+        }
+
+        [HttpGet("GetUserGroups")]
+        public IActionResult GetUserGroups(string username)
+        {
+            var data = _chatService.GetUserGroups(username);
             return Ok(data);
         }
 
@@ -67,10 +74,17 @@ namespace WebApi.Controllers
             return Ok(user);
         }
 
+        [HttpGet("GetAllGroups")]
+        public IActionResult GetAllGroups()
+        {
+            var data = _chatService.GetAllGroups();
+            return Ok(data);
+        }
+
         public class ResponseModel
         {
             public string Value { get; set; }
-            public bool State  { get; set; }
+            public bool State { get; set; }
         }
     }
 }

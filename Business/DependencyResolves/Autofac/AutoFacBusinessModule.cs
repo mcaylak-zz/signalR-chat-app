@@ -18,6 +18,8 @@ namespace Business.DependencyResolves.Autofac
             builder.RegisterType<ChatManager>().As<IChatService>();
             builder.RegisterType<EfMessageDal>().As<IMessageDal>();
 
+            builder.RegisterType<EfGroupDal>().As<IGroupDal>();
+
             builder.RegisterType<JwtHelper>().As<ITokenHelper>();
         }
     }

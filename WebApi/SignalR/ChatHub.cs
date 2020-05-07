@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.SignalR;
 namespace WebApi.SignalR
 {
     public class ChatHub : Hub
-    { 
+    {
         private static List<ConnectedUser> _connectedUsers = new List<ConnectedUser>();
         private IChatService _chatService;
 
@@ -44,9 +44,9 @@ namespace WebApi.SignalR
             Clients.All.SendAsync("receiveBroadCast", message);
         }
 
-        public void PrivateChat(string toUser,string fromUser,string message)
+        public void PrivateChat(string toUser, string fromUser, string message)
         {
-            _chatService.saveMessage(toUser,fromUser,message);
+            _chatService.saveMessage(toUser, fromUser, message);
             _connectedUsers.ForEach(val =>
             {
                 if (val.Username == fromUser)
@@ -58,21 +58,23 @@ namespace WebApi.SignalR
         public void JoinRoom(string roomName)
         {
             Groups.AddToGroupAsync(Context.ConnectionId, roomName);
-            var userName = _connectedUsers.Find(x => x.ConnId == Context.ConnectionId).Username; 
-            Clients.Group(roomName).SendAsync("ReceiveGroupMessage",  userName + " Joined");
+            //var userName = _connectedUsers.Find(x => x.ConnId == Context.ConnectionId).Username;
+            //Clients.Group(roomName).SendAsync("ReceiveGroupMessage",  userName + " Joined");
         }
 
         public void LeaveRoom(string roomName)
         {
             Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
-            var userName = _connectedUsers.Find(x => x.ConnId == Context.ConnectionId).Username;
-            Clients.Group(roomName).SendAsync("ReceiveGroupMessage", userName + " Leave");
+            //var userName = _connectedUsers.Find(x => x.ConnId == Context.ConnectionId).Username;
+            // Clients.Group(roomName).SendAsync("ReceiveGroupMessage", userName + " Leave");
         }
 
-        public void SendMessageToRoom(string fromName,string roomName,string message)
+        public void SendMessageToRoom(string fromName, string roomName, string message)
         {
-            /*Save group message*/
-            Clients.Group(roomName).SendAsync("ReceiveGroupMessage", message); // send group clients
+            Console.WriteLine();
+            _chatService.saveGroupMessage(roomName, fromName, message);
+
+            Clients.Group(roomName).SendAsync("ReceiveGroupMessage", message, fromName); // send group clients
         }
 
         public List<ConnectedUser> GetAllActiveConnections()

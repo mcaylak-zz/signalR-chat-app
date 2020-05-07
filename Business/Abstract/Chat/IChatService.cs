@@ -12,5 +12,8 @@ namespace Business.Abstract.Chat
         void saveGroupMessage(string groupName, string fromUser, string description);
         List<Message> GetGroupMessages(string groupName);
         List<User> GetAllUsers();
+        List<Group> GetUserGroups(string username);
+
+        List<Group> GetAllGroups();
     }
 }
