@@ -12,10 +12,18 @@ namespace WebApi.Controllers
     [ApiController]
     public class TestController : ControllerBase
     {
+        private IUserService _userService;
+
+        public TestController(IUserService userService)
+        {
+            _userService = userService;
+        }
+
         [HttpGet("test")]
         public IActionResult Test()
         {
-            return Ok("Bismillahirrahmanirrahim");
+            var data = _userService.GetUsers();
+            return Ok();
         }
     }
 }

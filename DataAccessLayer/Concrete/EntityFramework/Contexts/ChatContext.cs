@@ -16,5 +16,7 @@ namespace DataAccessLayer.Concrete.EntityFramework.Contexts
         }
         public DbSet<User> User { get; set; }
         public DbSet<Message> Message { get; set; }
+        public DbSet<GroupUser> GroupUser { get; set; }
+        public DbSet<Group> Group { get; set; }
     }
 }

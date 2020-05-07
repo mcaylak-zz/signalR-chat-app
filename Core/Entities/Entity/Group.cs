@@ -4,10 +4,10 @@ using System.Text;
 
 namespace Core.Entities.Entity
 {
-    public class User:IEntity
+    public class Group:IEntity
     {
         public int Id { get; set; }
-        public string Username { get; set; }
-        public virtual List<GroupUser> Groups { get; set; }
+        public string Name { get; set; }
+        public virtual List<GroupUser> Users { get; set; }
     }
 }
